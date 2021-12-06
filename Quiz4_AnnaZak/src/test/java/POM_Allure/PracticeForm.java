@@ -23,9 +23,8 @@ public class PracticeForm {
     }
 
     @Flaky
-    @Test(description = "Login and Logout Scenario")
-    @Description("Success login and logout scenario")
-    @Story("Valid username and password login test")
+    @Test(description = "Register student Scenario")
+    @Description("Success registration")
 
     public void Register(){
 
@@ -42,18 +41,18 @@ public class PracticeForm {
         registrationForm.registerUser("Nino","Zakaidze","123123123");
         registrationForm.clickRegistration();
 
+        // Check that 'Thanks for submitting the form' text is visible
 
     }
 
     //Register another student and use TestNG @DataProvider to keep test data and avoid test duplication
     @DataProvider(name = "data-provider")
     public Object[][] dpMethod(){
-        return new Object[][] {{"Anna","Zakaidze","599264447"}, {"Nino","Zakaidze","123123123"}};
+        return new Object[][] {{"Anna","Zakaidze","599264447"}, {"Nino","Zakaidze","1232123123"}};
     }
     @Flaky
     @Test(description = "Login and Logout Scenario",dataProvider = "data-provider")
-    @Description("Success login and logout scenario")
-    @Story("Valid username and password login test")
+    @Description("Another student registration")
 
     public void RegisterAnother(){
 
@@ -67,28 +66,12 @@ public class PracticeForm {
         registrationForm.clickRegistrationForm();
 
         //Fill First Name, Last Name , Gender and mobile number
-        registrationForm.registerUser("Anna","Zakaidze","599264447");
+        registrationForm.registerUser("Anna","Zakaidze","5992643447");
         registrationForm.clickRegistration();
 
-
+        // Check that 'Thanks for submitting the form' text is visible
+        registrationForm.checkSuccessRegistration();
     }
 
-    @Flaky
-    @Test(description = "Login and Logout Scenario")
-    @Description("Success login and logout scenario")
-    //  @Story("InvaliValid username and password login test")
-    public void invalidLogin(){
-
-        HomePage home = new HomePage();
-        LoginPage login = new LoginPage();
-        Dashboard dashboard = new Dashboard();
-        home.clickLogin();
-        login.enterUsername("alina23");
-        login.enterPassword("Automation");
-        login.clickLogin();
-        dashboard.checkText();
-        dashboard.clickLogout();
-
-    }
 
 }

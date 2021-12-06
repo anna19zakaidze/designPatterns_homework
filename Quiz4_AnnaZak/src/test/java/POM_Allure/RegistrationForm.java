@@ -1,13 +1,18 @@
 package POM_Allure;
 
+import com.codeborne.selenide.testng.SoftAsserts;
 import io.qameta.allure.Step;
 import io.qameta.allure.internal.shadowed.jackson.databind.ser.Serializers;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
+import org.testng.asserts.SoftAssert;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
+@Listeners({ SoftAsserts.class})
 public class RegistrationForm extends BaseTest {
     By practiceFormsBtn = (By)  $(".element-list collapse show").findAll("span").get(1).shouldHave(text("Practice Form"));
     By firstName = By.id("firstName");
@@ -15,6 +20,7 @@ public class RegistrationForm extends BaseTest {
     By gender = By.id("gender-radio-2");
     By mobile = By.id("userNumber");
     By submitBtn = By.id("submit");
+    WebElement successRegistrationForm = driver.findElement(By.id("example-modal-sizes-title-lg"));
 
     @Step("Go to registration form")
     public void clickRegistrationForm() {
@@ -38,5 +44,12 @@ public class RegistrationForm extends BaseTest {
     public void clickRegistration() {
 
         driver.findElement(submitBtn).click();
+    }
+    @Step("Check success registration")
+    public void checkSuccessRegistration() {
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(successRegistrationForm.getText(),"Thanks for submitting the form");
+        softAssert.assertAll();
     }
 }
